@@ -1,0 +1,27 @@
+//*********************************************************
+//Login
+const JWT_Secret = 'your_secret_key'; 
+app.post('/login', (req, res) => {
+  var testUser = { userName: 'tamil', password: '123'};
+  if (req.body) {
+    var user = req.body;
+    console.log(user)
+    if (testUser.userName===req.body.userName && testUser.password === req.body.password) {
+      var token = jwt.sign(user, JWT_Secret);
+      res.status(200).send({
+        signed_user: user,
+        token: token,
+        msg:"success"
+      });
+    } else {
+      res.status(403).send({
+        errorMessage: 'Authorisation required!'
+      });
+    }
+  } else {
+    res.status(403).send({
+      errorMessage: 'Please provide email and password'
+    });
+  }
+ 
+});
